@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=3 uid="uid://bk5nnyof5jo7f"]
+
+[ext_resource type="Script" path="res://addons/gpdot/prompter.gd" id="1_a6hgy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sjm8s"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.262745, 0.262745, 0.262745, 0.823529)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.886275, 0.886275, 0.886275, 0.392157)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_rlh25"]
+Label/styles/normal = SubResource("StyleBoxFlat_sjm8s")
+RichTextLabel/styles/focus = null
+RichTextLabel/styles/normal = SubResource("StyleBoxFlat_sjm8s")
+
+[node name="Prompter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a6hgy")
+
+[node name="ChatContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+alignment = 2
+
+[node name="ChatFlowWrapper" type="ScrollContainer" parent="ChatContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="Container" type="VBoxContainer" parent="ChatContainer/ChatFlowWrapper"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource("Theme_rlh25")
+alignment = 2
+
+[node name="Chat" type="Label" parent="ChatContainer/ChatFlowWrapper/Container"]
+layout_mode = 2
+text = "Welcome to GPDoT (ChatGPT + Godot) Plugin ! :)"
+
+[node name="ChatLineEdit" type="LineEdit" parent="ChatContainer"]
+layout_mode = 2
+placeholder_text = "Asks chatGPT Here ..."
+
+[connection signal="text_submitted" from="ChatContainer/ChatLineEdit" to="." method="_on_chat_line_edit_text_submitted"]
